@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMARTATTEND 360</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo-area">
+        <div class="logo-icon">SA</div>
+
+        <div>
+            <h2>SMARTATTEND</h2>
+            <span>360</span>
+        </div>
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <button class="nav-item active" data-page="dashboard">
+            <span>▣</span>
+            <label>Dashboard</label>
+        </button>
+
+        <button class="nav-item" data-page="students">
+            <span>👥</span>
+            <label>Students</label>
+        </button>
+
+        <button class="nav-item" data-page="attendance">
+            <span>✓</span>
+            <label>Attendance</label>
+        </button>
+
+        <button class="nav-item" data-page="insights">
+            <span>💡</span>
+            <label>Smart Insights</label>
+        </button>
+
+        <button class="nav-item" data-page="calculator">
+            <span>🧮</span>
+            <label>Can I Miss?</label>
+        </button>
+
+        <button class="nav-item" data-page="recovery">
+            <span>↗</span>
+            <label>Recovery Planner</label>
+        </button>
+
+        <button class="nav-item" data-page="goals">
+            <span>🎯</span>
+            <label>Attendance Goal</label>
+        </button>
+
+        <button class="nav-item" data-page="risk">
+            <span>⚠</span>
+            <label>Risk Monitor</label>
+        </button>
+
+        <button class="nav-item" data-page="analytics">
+            <span>▥</span>
+            <label>Analytics</label>
+        </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <button class="nav-item" data-page="settings">
+            <span>⚙</span>
+            <label>Settings</label>
+        </button>
+
+        <button class="nav-item" id="darkModeBtn">
+            <span id="darkIcon">☾</span>
+            <label>Dark Mode</label>
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-content">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button id="menuBtn" class="menu-btn">
+                ☰
+            </button>
+
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSubtitle">
+                    Smart attendance management system
+                </p>
+            </div>
+
+        </div>
+
+
+       <div class="topbar-right">
+
+    <!-- NOTIFICATION BUTTON -->
+    <button class="notification-btn" id="notificationBtn">
+        🔔
+        <span class="notification-badge" id="notificationBadge">0</span>
+    </button>
+
+    <div class="today-box">
+        <span>Today</span>
+        <strong id="todayDate"></strong>
+    </div>
+
+</div>
+
+    </header>
+
+
+    <!-- ================= PAGE CONTAINER ================= -->
+
+    <div class="page-container">
+
+
+        <!-- ================================================= -->
+        <!-- DASHBOARD -->
+        <!-- ================================================= -->
+
+        <section class="page active-page" id="dashboardPage">
+
+            <div class="welcome-card">
+
+                <div>
+                    <span class="small-label">SMARTATTEND 360</span>
+
+                    <h2>Attendance at a glance</h2>
+
+                    <p>
+                        Monitor students, attendance trends,
+                        risks and academic progress from one place.
+                    </p>
+                </div>
+
+                <div class="welcome-icon">
+                    📊
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stat-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">👥</div>
+
+                    <div>
+                        <p>Total Students</p>
+                        <h2 id="totalStudents">0</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon green">✓</div>
+
+                    <div>
+                        <p>Today's Present</p>
+                        <h2 id="todayPresent">0</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon red">!</div>
+
+                    <div>
+                        <p>Today's Absent</p>
+                        <h2 id="todayAbsent">0</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">%</div>
+
+                    <div>
+                        <p>Overall Attendance</p>
+                        <h2 id="overallPercentage">0%</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD GRID -->
+
+            <div class="dashboard-grid">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3>Attendance Overview</h3>
+                            <p>Current attendance performance</p>
+                        </div>
+                    </div>
+
+                    <div class="big-percentage">
+                        <span id="dashboardBigPercentage">0%</span>
+
+                        <div class="progress-bar large">
+                            <div id="dashboardProgress"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3>Smart Insight</h3>
+                            <p>Automatic attendance analysis</p>
+                        </div>
+                    </div>
+
+                    <div id="dashboardInsight" class="insight-box">
+                        Add attendance data to generate insights.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Frequently used actions</p>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <button class="quick-card" data-go="students">
+                        <span>👤+</span>
+                        <strong>Add Student</strong>
+                        <small>Create a new student profile</small>
+                    </button>
+
+
+                    <button class="quick-card" data-go="attendance">
+                        <span>✓</span>
+                        <strong>Mark Attendance</strong>
+                        <small>Record today's attendance</small>
+                    </button>
+
+
+                    <button class="quick-card" data-go="analytics">
+                        <span>📊</span>
+                        <strong>View Analytics</strong>
+                        <small>Analyze attendance data</small>
+                    </button>
+
+
+                    <button class="quick-card" data-go="risk">
+                        <span>⚠</span>
+                        <strong>Risk Monitor</strong>
+                        <small>Find students at risk</small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- STUDENTS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="studentsPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Student Management</h2>
+                    <p>Add, edit, search and manage students.</p>
+                </div>
+
+                <button class="primary-btn" id="addStudentBtn">
+                    + Add Student
+                </button>
+
+            </div>
+
+
+            <!-- STUDENT CONTROLS -->
+
+            <div class="card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="studentSearch"
+                        placeholder="Search by name or roll number..."
+                    >
+
+
+                    <select id="departmentFilter">
+
+                        <option value="all">
+                            All Departments
+                        </option>
+
+                    </select>
+
+
+                    <button class="secondary-btn" id="clearSearch">
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT TABLE -->
+
+            <div class="card table-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Roll No</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Attendance</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentsTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div id="emptyStudents" class="empty-state">
+                    No students found.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ATTENDANCE -->
+        <!-- ================================================= -->
+
+        <section class="page" id="attendancePage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Mark Attendance</h2>
+                    <p>Select date and subject before marking attendance.</p>
+                </div>
+
+                <button class="primary-btn" id="exportCsvBtn">
+                    ↓ Export CSV
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="attendance-controls">
+
+                    <div class="form-group">
+
+                        <label>Date</label>
+
+                        <input
+                            type="date"
+                            id="attendanceDate"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Subject</label>
+
+                        <select id="subjectSelect">
+
+                            <option value="Data Structures">
+                                Data Structures
+                            </option>
+
+                            <option value="Database Management">
+                                Database Management
+                            </option>
+
+                            <option value="Operating Systems">
+                                Operating Systems
+                            </option>
+
+                            <option value="Computer Networks">
+                                Computer Networks
+                            </option>
+
+                            <option value="Software Engineering">
+                                Software Engineering
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Department</label>
+
+                        <select id="attendanceDepartment">
+
+                            <option value="all">
+                                All Departments
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="attendance-summary">
+
+                    <div class="mini-stat green-bg">
+                        <span>Present</span>
+                        <strong id="attendancePresentCount">0</strong>
+                    </div>
+
+                    <div class="mini-stat red-bg">
+                        <span>Absent</span>
+                        <strong id="attendanceAbsentCount">0</strong>
+                    </div>
+
+                    <div class="mini-stat yellow-bg">
+                        <span>Late</span>
+                        <strong id="attendanceLateCount">0</strong>
+                    </div>
+
+                    <div class="mini-stat gray-bg">
+                        <span>Not Marked</span>
+                        <strong id="attendanceNotMarkedCount">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card table-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Roll No</th>
+                                <th>Student</th>
+                                <th>Department</th>
+                                <th>Attendance Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="attendanceTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- SMART INSIGHTS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="insightsPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Smart Insights</h2>
+                    <p>Automatic attendance intelligence.</p>
+                </div>
+
+            </div>
+
+
+            <div class="insight-grid" id="smartInsights"></div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- CAN I MISS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="calculatorPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Can I Miss?</h2>
+                    <p>Calculate whether a student can miss another class.</p>
+                </div>
+
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="card">
+
+                    <h3>Attendance Calculator</h3>
+
+                    <div class="form-group">
+
+                        <label>Total Classes Conducted</label>
+
+                        <input
+                            type="number"
+                            id="calcTotal"
+                            min="0"
+                            placeholder="Example: 50"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Classes Attended</label>
+
+                        <input
+                            type="number"
+                            id="calcAttended"
+                            min="0"
+                            placeholder="Example: 42"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Required Attendance %</label>
+
+                        <input
+                            type="number"
+                            id="calcRequired"
+                            value="75"
+                            min="1"
+                            max="100"
+                        >
+
+                    </div>
+
+
+                    <button class="primary-btn full" id="calculateMissBtn">
+                        Calculate
+                    </button>
+
+                </div>
+
+
+                <div class="card calculator-result">
+
+                    <span>Current Attendance</span>
+
+                    <strong id="calcCurrent">0%</strong>
+
+                    <div id="calcMessage" class="result-message">
+                        Enter your attendance details.
+                    </div>
+
+                    <div class="calc-details" id="calcDetails"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RECOVERY -->
+        <!-- ================================================= -->
+
+        <section class="page" id="recoveryPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Recovery Planner</h2>
+                    <p>Plan how many classes you need to attend to recover.</p>
+                </div>
+
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="card">
+
+                    <h3>Recovery Calculator</h3>
+
+                    <div class="form-group">
+
+                        <label>Current Classes Conducted</label>
+
+                        <input
+                            type="number"
+                            id="recoveryTotal"
+                            min="0"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Classes Attended</label>
+
+                        <input
+                            type="number"
+                            id="recoveryAttended"
+                            min="0"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Target Attendance %</label>
+
+                        <input
+                            type="number"
+                            id="recoveryTarget"
+                            value="75"
+                            min="1"
+                            max="100"
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn full"
+                        id="recoveryBtn"
+                    >
+                        Create Recovery Plan
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Your Recovery Plan</h3>
+
+                    <div id="recoveryResult" class="recovery-result">
+                        Enter your details to generate a plan.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- GOALS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="goalsPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Attendance Goal</h2>
+                    <p>Set and track your attendance target.</p>
+                </div>
+
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="card">
+
+                    <h3>Set Goal</h3>
+
+                    <div class="form-group">
+
+                        <label>Target Attendance %</label>
+
+                        <input
+                            type="number"
+                            id="goalInput"
+                            min="1"
+                            max="100"
+                            value="75"
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn full"
+                        id="saveGoalBtn"
+                    >
+                        Save Attendance Goal
+                    </button>
+
+                </div>
+
+
+                <div class="card goal-display">
+
+                    <span>Current Goal</span>
+
+                    <strong id="goalPercentage">
+                        75%
+                    </strong>
+
+                    <div class="progress-bar large">
+
+                        <div id="goalProgress"></div>
+
+                    </div>
+
+                    <p id="goalMessage">
+                        Keep attending classes regularly.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RISK -->
+        <!-- ================================================= -->
+
+        <section class="page" id="riskPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Risk Monitor</h2>
+                    <p>Students who may need attendance attention.</p>
+                </div>
+
+            </div>
+
+
+            <div class="risk-summary">
+
+                <div class="risk-card safe">
+                    <span>Safe</span>
+                    <strong id="safeCount">0</strong>
+                </div>
+
+                <div class="risk-card warning">
+                    <span>Warning</span>
+                    <strong id="warningCount">0</strong>
+                </div>
+
+                <div class="risk-card danger">
+                    <span>Critical</span>
+                    <strong id="criticalCount">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="card table-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Student</th>
+                                <th>Roll No</th>
+                                <th>Attendance</th>
+                                <th>Risk</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="riskTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ANALYTICS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="analyticsPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Analytics</h2>
+                    <p>Visual attendance analysis.</p>
+                </div>
+
+                <button class="secondary-btn" id="analyticsRefresh">
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <div class="analytics-grid">
+
+                <div class="card">
+
+                    <h3>Attendance Distribution</h3>
+
+                    <div class="bar-chart">
+
+                        <div class="chart-row">
+
+                            <span>Present</span>
+
+                            <div class="chart-track">
+                                <div id="chartPresent"></div>
+                            </div>
+
+                            <strong id="chartPresentValue">0%</strong>
+
+                        </div>
+
+
+                        <div class="chart-row">
+
+                            <span>Absent</span>
+
+                            <div class="chart-track">
+                                <div id="chartAbsent"></div>
+                            </div>
+
+                            <strong id="chartAbsentValue">0%</strong>
+
+                        </div>
+
+
+                        <div class="chart-row">
+
+                            <span>Late</span>
+
+                            <div class="chart-track">
+                                <div id="chartLate"></div>
+                            </div>
+
+                            <strong id="chartLateValue">0%</strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Department Performance</h3>
+
+                    <div id="departmentAnalytics"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Student Attendance Performance</h3>
+
+                <div id="studentAnalytics"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- SETTINGS -->
+        <!-- ================================================= -->
+
+        <section class="page" id="settingsPage">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Settings</h2>
+                    <p>Manage your SMARTATTEND 360 preferences.</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-card card">
+
+                <div class="setting-row">
+
+                    <div>
+                        <h3>Dark Mode</h3>
+                        <p>Change the application appearance.</p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        id="settingsDarkBtn"
+                    >
+                        Toggle
+                    </button>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div>
+                        <h3>Export Attendance</h3>
+                        <p>Download attendance data as CSV.</p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        id="settingsExportBtn"
+                    >
+                        Export
+                    </button>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div>
+                        <h3>Reset Demo Data</h3>
+                        <p>Restore the original sample data.</p>
+                    </div>
+
+                    <button
+                        class="danger-btn"
+                        id="resetDataBtn"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div>
+                        <h3>Clear All Data</h3>
+                        <p>Delete all students and attendance records.</p>
+                    </div>
+
+                    <button
+                        class="danger-btn"
+                        id="clearDataBtn"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ================================================= -->
+<!-- STUDENT MODAL -->
+<!-- ================================================= -->
+
+<div class="modal-overlay" id="studentModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="modalTitle">Add Student</h2>
+                <p>Create a student profile.</p>
+            </div>
+
+            <button class="close-btn" id="closeModal">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="studentForm">
+
+            <input type="hidden" id="editStudentId">
+
+
+            <div class="form-group">
+
+                <label>Roll Number</label>
+
+                <input
+                    type="text"
+                    id="studentRoll"
+                    required
+                    placeholder="CSE001"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Student Name</label>
+
+                <input
+                    type="text"
+                    id="studentName"
+                    required
+                    placeholder="Student name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <select id="studentDepartment">
+
+                    <option value="CSE">
+                        CSE
+                    </option>
+
+                    <option value="ECE">
+                        ECE
+                    </option>
+
+                    <option value="EEE">
+                        EEE
+                    </option>
+
+                    <option value="MECH">
+                        MECH
+                    </option>
+
+                    <option value="IT">
+                        IT
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Year</label>
+
+                <select id="studentYear">
+
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="cancelModal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Student
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- NOTIFICATION PANEL -->
+
+<div class="notification-panel" id="notificationPanel">
+
+    <div class="notification-header">
+        <div>
+            <h3>Notifications</h3>
+            <p>Attendance alerts and updates</p>
+        </div>
+
+        <button id="closeNotifications">×</button>
+    </div>
+
+    <div id="notificationList" class="notification-list">
+        <div class="empty-notification">
+            🔔 No new notifications
+        </div>
+    </div>
+
+</div>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

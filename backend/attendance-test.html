@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMARTATTEND 360 - Attendance Test</title>
+</head>
+
+<body>
+
+    <h1>SMARTATTEND 360</h1>
+
+    <hr>
+
+    <h2>CREATE - Mark Attendance</h2>
+
+    <label>Student MongoDB ID:</label>
+
+    <br><br>
+
+    <input
+        type="text"
+        id="studentId"
+        placeholder="Enter Student MongoDB ID"
+        style="width:350px;"
+    >
+
+    <br><br>
+
+    <label>Date:</label>
+
+    <br><br>
+
+    <input
+        type="date"
+        id="date"
+    >
+
+    <br><br>
+
+    <label>Status:</label>
+
+    <br><br>
+
+    <select id="status">
+
+        <option value="Present">
+            Present
+        </option>
+
+        <option value="Absent">
+            Absent
+        </option>
+
+        <option value="Late">
+            Late
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="createAttendance()">
+        Mark Attendance
+    </button>
+
+
+    <hr>
+
+
+    <h2>READ - View Attendance</h2>
+
+    <button onclick="getAttendance()">
+        Load Attendance
+    </button>
+
+
+    <hr>
+
+
+    <h2>Result</h2>
+
+    <pre id="result"></pre>
+
+
+    <script>
+
+        const API_URL =
+            "http://localhost:5000/api/attendance";
+
+
+        // ==========================================
+        // CREATE ATTENDANCE
+        // ==========================================
+
+        async function createAttendance() {
+
+            const studentId =
+                document.getElementById("studentId").value;
+
+            const date =
+                document.getElementById("date").value;
+
+            const status =
+                document.getElementById("status").value;
+
+
+            if (!studentId) {
+
+                document.getElementById("result").textContent =
+                    "Please enter Student MongoDB ID.";
+
+                return;
+            }
+
+
+            if (!date) {
+
+                document.getElementById("result").textContent =
+                    "Please select a date.";
+
+                return;
+            }
+
+
+            const attendance = {
+
+                studentId: studentId,
+
+                date: date,
+
+                status: status
+
+            };
+
+
+            try {
+
+                const response = await fetch(
+                    API_URL,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(attendance)
+
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "CREATE ERROR: " + error.message;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // READ ATTENDANCE
+        // ==========================================
+
+        async function getAttendance() {
+
+            try {
+
+                const response =
+                    await fetch(API_URL);
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "READ ERROR: " + error.message;
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

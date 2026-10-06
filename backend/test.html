@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMARTATTEND 360 - CRUD Test</title>
+
+</head>
+
+
+<body>
+
+    <h1>SMARTATTEND 360</h1>
+
+    <hr>
+
+
+    <!-- ===================================== -->
+    <!-- CREATE -->
+    <!-- ===================================== -->
+
+    <h2>CREATE - Add Student</h2>
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Name"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="rollNumber"
+        placeholder="Roll Number"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="department"
+        placeholder="Department"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="year"
+        placeholder="Year"
+    >
+
+    <br><br>
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Email"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="phone"
+        placeholder="Phone"
+    >
+
+    <br><br>
+
+    <button onclick="createStudent()">
+        Add Student
+    </button>
+
+
+    <hr>
+
+
+    <!-- ===================================== -->
+    <!-- READ -->
+    <!-- ===================================== -->
+
+    <h2>READ - View Students</h2>
+
+    <button onclick="getStudents()">
+        Load Students
+    </button>
+
+    <br><br>
+
+    <div id="studentsList"></div>
+
+
+    <hr>
+
+
+    <!-- ===================================== -->
+    <!-- UPDATE -->
+    <!-- ===================================== -->
+
+    <h2>UPDATE - Edit Student</h2>
+
+    <input
+        type="text"
+        id="updateId"
+        placeholder="MongoDB Student ID"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="updateName"
+        placeholder="New Name"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="updateRollNumber"
+        placeholder="New Roll Number"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="updateDepartment"
+        placeholder="New Department"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="updateYear"
+        placeholder="New Year"
+    >
+
+    <br><br>
+
+    <input
+        type="email"
+        id="updateEmail"
+        placeholder="New Email"
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        id="updatePhone"
+        placeholder="New Phone"
+    >
+
+    <br><br>
+
+    <button onclick="updateStudent()">
+        Update Student
+    </button>
+
+
+    <hr>
+
+
+    <!-- ===================================== -->
+    <!-- DELETE -->
+    <!-- ===================================== -->
+
+    <h2>DELETE - Delete Student</h2>
+
+    <input
+        type="text"
+        id="deleteId"
+        placeholder="MongoDB Student ID"
+    >
+
+    <br><br>
+
+    <button onclick="deleteStudent()">
+        Delete Student
+    </button>
+
+
+    <hr>
+
+
+    <!-- ===================================== -->
+    <!-- RESULT -->
+    <!-- ===================================== -->
+
+    <h2>Result</h2>
+
+    <pre id="result"></pre>
+
+
+    <script>
+
+
+        // ==================================================
+        // CREATE STUDENT
+        // ==================================================
+
+        async function createStudent() {
+
+            const student = {
+
+                name: document.getElementById("name").value,
+
+                rollNumber:
+                    document.getElementById("rollNumber").value,
+
+                department:
+                    document.getElementById("department").value,
+
+                year:
+                    document.getElementById("year").value,
+
+                email:
+                    document.getElementById("email").value,
+
+                phone:
+                    document.getElementById("phone").value
+
+            };
+
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/students",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(student)
+
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+                // Reload students
+
+                getStudents();
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "CREATE ERROR: " + error.message;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // READ ALL STUDENTS
+        // ==================================================
+
+        async function getStudents() {
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/students"
+                );
+
+
+                const students = await response.json();
+
+
+                // Show raw result
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(students, null, 2);
+
+
+                // Show students on page
+
+                const container =
+                    document.getElementById("studentsList");
+
+
+                container.innerHTML = "";
+
+
+                if (students.length === 0) {
+
+                    container.innerHTML =
+                        "<p>No students found.</p>";
+
+                    return;
+
+                }
+
+
+                students.forEach(student => {
+
+                    const div =
+                        document.createElement("div");
+
+
+                    div.style.border = "1px solid black";
+
+                    div.style.padding = "10px";
+
+                    div.style.marginBottom = "10px";
+
+
+                    div.innerHTML = `
+
+                        <strong>
+                            ${student.name}
+                        </strong>
+
+                        <br>
+
+                        Roll Number:
+                        ${student.rollNumber}
+
+                        <br>
+
+                        Department:
+                        ${student.department}
+
+                        <br>
+
+                        Year:
+                        ${student.year}
+
+                        <br>
+
+                        Email:
+                        ${student.email || "N/A"}
+
+                        <br>
+
+                        Phone:
+                        ${student.phone || "N/A"}
+
+                        <br><br>
+
+                        <strong>
+                            MongoDB ID:
+                        </strong>
+
+                        ${student._id}
+
+                    `;
+
+
+                    container.appendChild(div);
+
+                });
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "READ ERROR: " + error.message;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // UPDATE STUDENT
+        // ==================================================
+
+        async function updateStudent() {
+
+            const id =
+                document.getElementById("updateId").value;
+
+
+            if (!id) {
+
+                document.getElementById("result").textContent =
+                    "Please enter the MongoDB Student ID.";
+
+                return;
+
+            }
+
+
+            const updatedStudent = {
+
+                name:
+                    document.getElementById("updateName").value,
+
+                rollNumber:
+                    document.getElementById("updateRollNumber").value,
+
+                department:
+                    document.getElementById("updateDepartment").value,
+
+                year:
+                    document.getElementById("updateYear").value,
+
+                email:
+                    document.getElementById("updateEmail").value,
+
+                phone:
+                    document.getElementById("updatePhone").value
+
+            };
+
+
+            try {
+
+                const response = await fetch(
+
+                    `http://localhost:5000/api/students/${id}`,
+
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(updatedStudent)
+
+                    }
+
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+                // Reload students
+
+                getStudents();
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "UPDATE ERROR: " + error.message;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // DELETE STUDENT
+        // ==================================================
+
+        async function deleteStudent() {
+
+            const id =
+                document.getElementById("deleteId").value;
+
+
+            if (!id) {
+
+                document.getElementById("result").textContent =
+                    "Please enter the MongoDB Student ID.";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response = await fetch(
+
+                    `http://localhost:5000/api/students/${id}`,
+
+                    {
+
+                        method: "DELETE"
+
+                    }
+
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+
+                // Reload students
+
+                getStudents();
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "DELETE ERROR: " + error.message;
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
